@@ -1,0 +1,47 @@
+#include <bits/stdc++.h>
+
+using namespace std;
+
+vector<int>down,up;
+int main(){
+vector<bool>v;
+int arr[100000]={0};
+int n=0,m=0;
+cin>>n>>m;
+for(int i=0;i<n;i++)cin>>arr[i];
+for(int i=1;i<n-1;i++)if(arr[i]>arr[i+1])down.push_back(i);else if(arr[i]<arr[i+1])up.push_back(i);
+
+
+while(m--){
+int l=0,r=0,i=-1,j=-1;
+cin>>l>>r;
+if(r-l+1==1){v.push_back(1);continue;}
+l--,r--;
+int low=0,high=up.size()-1;
+while(low<=high){
+int mid=(low+high)/2;
+if(up[mid]<l)low=mid+1;
+else if(up[mid]>=r)high=mid-1;
+else i=up[mid],low=mid+1;
+}
+
+low=0,high=down.size()-1;
+
+while(low<=high){
+int mid=(low+high)/2;
+if(down[mid]<l)low=mid+1;
+else if(down[mid]>r)high=mid-1;
+else j=down[mid],high=mid-1;
+}
+if(i!=-1&&j!=-1&&i<=j)v.push_back(1);
+else if((i==-1)||(j==-1))v.push_back(1);
+else v.push_back(0);
+}
+
+
+
+for(int i=0;i<(int)v.size();i++)cout<<(v[i]?"Yes":"No")<<endl;
+
+
+    return 0;
+}
